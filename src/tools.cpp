@@ -23,7 +23,7 @@ parse_str_secret_key(const string& key_str, T& secret_key)
     // a key, e.g., a view key, we can first parse it into the hash
     // object using parse_hash256 function, and then copy the reslting
     // hash data into secret key.
-    cryptonote::hash hash_;
+    crypto::hash hash_;
 
     if(!parse_hash256(key_str, hash_))
     {
@@ -53,7 +53,7 @@ template bool parse_str_secret_key<crypto::hash>(const string& key_str, crypto::
 bool
 get_tx_pub_key_from_str_hash(Blockchain& core_storage, const string& hash_str, transaction& tx)
 {
-    cryptonote::hash tx_hash;
+    crypto::hash tx_hash;
     parse_hash256(hash_str, tx_hash);
 
     try

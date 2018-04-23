@@ -1,15 +1,15 @@
-# Open Monero - a fully open sourced implementation of MyMonero backend
+# SolaceWeb - a fully open sourced implementation of MyMonero backend
 
 In this example [restbed](https://github.com/Corvusoft/restbed/) is used to
 demonstrate how to provide Monero related JSON REST service. For this purpose, 
- a service called Open Monero was developed.
+ a service called SolaceWeb was developed.
 
 
-Open Monero is an open source implementation of backend of
+SolaceWeb is an open source implementation of backend of
 https://mymonero.com/. The frontend, which includes HTML, CSS, JavaScript, was adapted
 from (and originally developed by) https://mymonero.com/. 
 
-Open Monero's backend is open sourced, free
+SolaceWeb's backend is open sourced, free
 to use, host and modify. Additionally, some features were added/changed as compared
 to MyMonero. They include:
 
@@ -37,21 +37,21 @@ to MyMonero. They include:
 
 - [http://139.162.32.245:81](http://139.162.32.245:81) - DOWN due to VPN problems at the moment :-(
 
-This is Open Monero running on testnet network. You can use it to play around with it. 
+This is SolaceWeb running on testnet network. You can use it to play around with it. 
 Since this is testnet version, frequent changes and database resets are expected. Also,
  it is running on cheap vps, which may result in some lag.
 
 If you want some testnet monero, please make issue with your testnet address that you can
-obtained from Open Monero.  
+obtained from SolaceWeb.  
 
 ## Screenshot
 
-![Open Monero](https://raw.githubusercontent.com/moneroexamples/openmonero/master/screenshot/screen1.png)
+![SolaceWeb](https://raw.githubusercontent.com/moneroexamples/solaceweb/master/screenshot/screen1.png)
 
 
 ## Host it yourself
 
-The Open Monero consists of four components that need to be setup for it to work:
+The SolaceWeb consists of four components that need to be setup for it to work:
 
  - MySql/Mariadb database - it stores user address (viewkey is not stored!), 
  associated transactions, outputs, inputs and transaction import payments information.
@@ -59,7 +59,7 @@ The Open Monero consists of four components that need to be setup for it to work
   It consists of HTML, CSS, and JavaScript.
  - Monero daemon - daemon must be running and fully sync, as this is 
  where all transaction data is fetched from and used. Daemon also commits txs 
- from the Open Monero into the Monero network.
+ from the SolaceWeb into the Monero network.
  - Backend - fully written in C++. It uses [restbed](https://github.com/Corvusoft/restbed/) to serve JSON REST to the frontend 
  and [mysql++](http://www.tangentsoft.net/mysql++/) to interface the database. It also accesses Monero blockchain and "talks"
  with Monero deamon.
@@ -69,7 +69,7 @@ The Open Monero consists of four components that need to be setup for it to work
 
 #### Performance
 
-Open Monero is not as fast as MyMonero. This is because it is basic, easy to understand
+SolaceWeb is not as fast as MyMonero. This is because it is basic, easy to understand
  and straight forward implementation of the backend. Thus, it does not use any special memory
  buffers/caches for transactions, blocks, complex database structures and SQL queries. Also, no ongoing 
  monitoring of user's transactions is happening, since viewkey is not stored. Transaction
@@ -81,7 +81,7 @@ Open Monero is not as fast as MyMonero. This is because it is basic, easy to und
 
 ## Example compilation on Ubuntu 16.04 
 
-Below are example and basic instructions on how to setup up and run Open Monero on Ubuntu 16.04. 
+Below are example and basic instructions on how to setup up and run SolaceWeb on Ubuntu 16.04. 
 For other Linux operating systems, the instructions are analogical. 
 
 
@@ -101,19 +101,16 @@ cd ~
 
 # get latest development version of monero. Monero changes so fast
 # that if something breaks during compilation of open monero, please make an issue
-git clone https://github.com/monero-project/monero
+git clone https://github.com/schmeckles22/SolaceCoin
 
-cd monero/
-
-# checkout last monero version
-git checkout -b last_release v0.11.0.0
+cd SolaceCoin/
 
 make
 ```
 
-#### Compilation of the Open Monero (don't run it yet)
+#### Compilation of the SolaceWeb (don't run it yet)
 
-Once Monero was downloaded and compiled, we can download Open Monero and compile it. 
+Once Monero was downloaded and compiled, we can download SolaceWeb and compile it. 
 In fact we could postpone compilation to later, but 
 we can just do it now, to see if it compiles. But don't run it yet. It will not
 work without database, setup frontend, and synced and running monero blockchain.
@@ -125,16 +122,16 @@ sudo apt install libmysql++-dev
 # go to home folder if still in ~/monero
 cd ~
 
-git clone https://github.com/moneroexamples/openmonero.git
+https://github.com/Elektryon-Dev/solaceweb
 
-cd openmonero
+cd solaceweb
 
 mkdir build && cd build
 
 cmake ..
 
-# altearnatively can use cmake -DMONERO_DIR=/path/to/monero_folder .. 
-# if monero is not in ~/monero
+# altearnatively can use cmake -DMONERO_DIR=/path/to/solace_folder .. 
+# if solace is not in ~/SolaceCoin
 
 make
 ```
@@ -146,15 +143,15 @@ sudo apt install mysql-server
 sudo mysql_secure_installation
 ```
 
-Download `openmonero.sql` provided and setup the `openmonero` database. `openmonero.sql` script will
-drop current `openmonero` if exist. So don't run it, if you have already some important information
-in the `openmonero` database.
+Download `solaceweb.sql` provided and setup the `solaceweb` database. `solaceweb.sql` script will
+drop current `solaceweb` if exist. So don't run it, if you have already some important information
+in the `solaceweb` database.
 
 Assuming we are still in `build` folder:
 
 ```bash
 # apply it to mysql
-mysql -p -u root < ../sql/openmonero.sql
+mysql -p -u root < ../sql/solaceweb.sql
 ```
 
 #### Lighttpd and frontend
@@ -165,11 +162,11 @@ sudo apt-get install lighttpd
 Assuming you are still in `build` folder, copy frontend source files into lighttpd www folder.
 
 ```bash
-sudo mkdir /var/www/html/openmonero
-sudo cp -rvf ../html/* /var/www/html/openmonero/
+sudo mkdir /var/www/html/solaceweb
+sudo cp -rvf ../html/* /var/www/html/solaceweb/
 ```
 
-Setup document root in `lighttpd.conf` into openmonero folder
+Setup document root in `lighttpd.conf` into solaceweb folder
 
 ```bash
 sudo vim /etc/lighttpd/lighttpd.conf
@@ -178,7 +175,7 @@ sudo vim /etc/lighttpd/lighttpd.conf
 and change `server.document-root` into:
 
 ```bash
-server.document-root    = "/var/www/html/openmonero"
+server.document-root    = "/var/www/html/solaceweb"
 ```
 
 Restart lighttpd to see the change:
@@ -190,12 +187,12 @@ sudo systemctl restart lighttpd
 Go to localhost (http://127.0.0.1) and check if frontend is working.
 
 
-#### Run Open Monero
+#### Run SolaceWeb
 
 Command line options
 
 ```bash
-./openmonero -h
+./solaceweb -h
 
   -h [ --help ] [=arg(=1)] (=0)         produce help message
   -t [ --testnet ] [=arg(=1)] (=0)      use testnet blockchain
@@ -203,17 +200,17 @@ Command line options
                                         useful when testing construction and 
                                         submiting txs
   -p [ --port ] arg (=1984)             default port for restbed service of 
-                                        Open Monero
+                                        SolaceWeb
   -c [ --config-file ] arg (=./config/config.json)
                                         Config file path.
 ```
 
 Other backend options are in `confing/config.json`.
 
-Before running `openmonero`: 
+Before running `solaceweb`: 
 
  - make sure you have `Downloads` folder in your home directory. 
- Time library used in Open Monero stores there time zone offsets database that it uses.
+ Time library used in SolaceWeb stores there time zone offsets database that it uses.
  - edit `config/confing.js` file with your settings. Especially set `frontend-url` and `database`
  connection details.
  - set `apiUrl` in `html\js\config.js` and `testnet` flag. Last slash `/` in `apiUrl` is important. 
@@ -225,18 +222,18 @@ Before running `openmonero`:
 
 To start for mainnet: 
 ```bash
-./openmonero
+./solaceweb
 ```
 
 To start for testnet: 
 ```bash
-./openmonero -t
+./solaceweb -t
 ```
    
 To start for testnet with non-default location of `config.json` file:
 
 ```bash
-./openmonero -t -c /path/to/config.json
+./solaceweb -t -c /path/to/config.json
 ```
 
  

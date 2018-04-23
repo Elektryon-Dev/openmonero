@@ -65,14 +65,14 @@ get_tx_pub_key_from_str_hash(Blockchain& core_storage,
 bool
 parse_str_address(const string& address_str,
                   account_public_address& address,
-                  bool testnet = false);
+                  bool testnet);
 
 inline bool
 is_separator(char c);
 
 string
 print_address(const account_public_address& address,
-              bool testnet = false);
+              bool testnet);
 
 string
 print_sig (const signature& sig);
